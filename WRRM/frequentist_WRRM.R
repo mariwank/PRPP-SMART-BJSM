@@ -39,8 +39,10 @@ if (subscenario == "a") {
   
   source("SubScenario_d.R")
   
-} 
-
+} else if (subscenario == "e") {
+  
+  source("SubScenario_e.R")
+}
 # specify what scenario you want to run (1,2,3)
 scenario <- 1
 
