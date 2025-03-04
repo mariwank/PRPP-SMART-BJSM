@@ -7,6 +7,7 @@ The code in this repository is in active development. To view or use stable code
 
 ## File Descriptions
 - [DataGeneration.R](DataGeneration.R): Main function used to generate data from a two-stage PRPP-SMART with binary end-of-stage outcome.
+- [BJSM.R](BJSM.R): Simulation code for Bayesian Joint Stage Model (BJSM) to estimate embedded dynamic treatment regimes (DTRs) in PRPP-SMART under all scenarios/sub-scenarios considered in the manuscript. Note, simulations are reccomened to be run on a high-performance cluster rather than a laptop.
 - [nsim_toget_500.R](nsim_toget_500.R): Functions used to determine the number of simulations needed to run per scenario/sub-scenario in order to achieve 500 total simulations. 
 
 ## Folder Descriptions
