@@ -10,6 +10,6 @@ The code in this repository is in active development. To view or use stable code
 - 
 
 ## Folder Descriptions
-- The [SubScenarios](SubScenarios)  folder contains the data generation parameters, including linkage parameter values and treatment outcome rates, that define each sub-scenario analyzed in the manuscript "Bayesian Estimation of Dynamic Treatment Regimens in a Partially Randomized Patient Preference, Sequential, Multiple-Assignment, Randomized Trial."
+- The [SubScenarios](SubScenarios)  folder contains the data generation parameters, including linkage parameter values and treatment outcome rates, that define each sub-scenario analyzed in the manuscript "Bayesian Estimation of Dynamic Treatment Regimens in a Partially Randomized Patient Preference, Sequential, Multiple-Assignment, Randomized Trial." Each sub-scenario is specified in its own .R file. For a detailed description of the sub-scenarios, refer to the manuscript.
 
 
