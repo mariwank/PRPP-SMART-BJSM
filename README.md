@@ -7,7 +7,7 @@ The code in this repository is in active development. To view or use stable code
 
 ## File Descriptions
 - [DataGeneration.R](DataGeneration.R): Main function used to generate data from a two-stage PRPP-SMART with binary end-of-stage outcome.
-- [nsim_toget_500.R](nsim_toget_500.R): Functions used to determine the number of simulations needed to run per scenario in order to achieve 500 total simulations. 
+- [nsim_toget_500.R](nsim_toget_500.R): Functions used to determine the number of simulations needed to run per scenario/sub-scenario in order to achieve 500 total simulations. 
 
 ## Folder Descriptions
 - The [SubScenarios](SubScenarios)  folder contains the data generation parameters, including linkage parameter values and treatment outcome rates, that define each sub-scenario analyzed in the manuscript "Bayesian Estimation of Dynamic Treatment Regimens in a Partially Randomized Patient Preference, Sequential, Multiple-Assignment, Randomized Trial." Each sub-scenario is specified in its own .R file. For a detailed description of the sub-scenarios, refer to the manuscript.
