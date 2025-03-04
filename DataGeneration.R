@@ -9,7 +9,7 @@
 
 ###########################################################################################################################
 
-#Function: gendata
+#Function: generate_data
 
 
 #Purpose: This function generates one simulation dataset for a two stage PRPP-SMART trial with a binary outcome. 
