@@ -18,6 +18,7 @@ method <- "WRRM"
 # b
 # c
 # d
+# e
 
 subscenario <- "a"
 
@@ -43,6 +44,7 @@ if (subscenario == "a") {
   
   source("SubScenario_e.R")
 }
+
 # specify what scenario you want to run (1,2,3)
 scenario <- 1
 
@@ -293,7 +295,7 @@ st<-format(Sys.time(), "%Y_%m_%d_%H_%M")
 #folder_path <- "path to your folder where you want to store frequentist results"
 
 # Example: 
-folder_path <- paste0("/Users/mariwank/Downloads/SimResults/WRRM/Scenario", scenario, "/", subscenario)
+folder_path <- paste0("/Users/mariwank/Downloads/SimResults/WRRM/Frequentist/Scenario", scenario, "/", subscenario)
 
 
 # Create the folder if it doesn't exist
