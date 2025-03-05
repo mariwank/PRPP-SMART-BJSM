@@ -35,39 +35,40 @@ prior_setting <- 1
 
 if (prior_setting == 1) {
   
-  pi_prior.a <- c(rep(1/3,6))  
-  pi_prior.b <- c(rep(1/3,6)) 
-  beta1_prior.r <- 2          
-  beta1_prior.mu <- 2      
-  alphaP_prior.r <- 2         
-  alphaP_prior.mu <- 2
+  pi_prior.a <- c(rep(1/3,6)) # pi_J, pi_jk ~ Beta(a,b)
+  pi_prior.b <- c(rep(1/3,6)) # pi_J, pi_jk ~ Beta(a,b)
+  beta1_prior.r <- 2          # Beta1j ~ Gamma(r, mu) 
+  beta1_prior.mu <- 2         # Beta1j ~ Gamma(r, mu)
+  alphaP_prior.r <- 2         # Alpha1j = Alpha2k ~ Gamma(r, mu)
+  alphaP_prior.mu <- 2        # Alpha1j = Alpha2k ~ Gamma(r, mu)
   
   
 } else if (prior_setting == 2) {
   
-  pi_prior.a <- c(rep(1/3,6))  
-  pi_prior.b <- c(rep(1/3,6)) 
-  beta1_prior.r <- 1           
-  beta1_prior.mu <- 1      
-  alphaP_prior.r <- 1        
-  alphaP_prior.mu <- 1
+  pi_prior.a <- c(rep(1/3,6))  # pi_J, pi_jk ~ Beta(a,b)
+  pi_prior.b <- c(rep(1/3,6))  # pi_J, pi_jk ~ Beta(a,b)
+  beta1_prior.r <- 1           # Beta1j ~ Gamma(r, mu)
+  beta1_prior.mu <- 1          # Beta1j ~ Gamma(r, mu)
+  alphaP_prior.r <- 1          # Alpha1j = Alpha2k ~ Gamma(r, mu) 
+  alphaP_prior.mu <- 1         # Alpha1j = Alpha2k ~ Gamma(r, mu)
   
 } else if (prior_setting == 3) {
   
-  pi_prior.a <- c(rep(1/3,6))  
-  pi_prior.b <- c(rep(1/3,6)) 
-  beta1_prior.r <- 1/2           
-  beta1_prior.mu <- 1/2     
-  alphaP_prior.r <- 1/2         
-  alphaP_prior.mu <- 1/2
+  pi_prior.a <- c(rep(1/3,6))  # pi_J, pi_jk ~ Beta(a,b)
+  pi_prior.b <- c(rep(1/3,6))  # pi_J, pi_jk ~ Beta(a,b)
+  beta1_prior.r <- 1/2         # Beta1j ~ Gamma(r, mu)    
+  beta1_prior.mu <- 1/2        # Beta1j ~ Gamma(r, mu)
+  alphaP_prior.r <- 1/2        # Alpha1j = Alpha2k ~ Gamma(r, mu) 
+  alphaP_prior.mu <- 1/2       # Alpha1j = Alpha2k ~ Gamma(r, mu) 
   
 } else if (prior_setting == 4) {
   
-  pi_prior.a <- c(rep(1,6))  
-  beta1_prior.r <- 1/2           
-  beta1_prior.mu <- 1/2     
-  alphaP_prior.r <- 1/2         
-  alphaP_prior.mu <- 1/2
+  pi_prior.a <- c(rep(1,6))  # pi_J, pi_jk ~ Beta(a,b)
+  pi_prior.b <- c(rep(1,6))  # pi_J, pi_jk ~ Beta(a,b)
+  beta1_prior.r <- 1/2       # Beta1j ~ Gamma(r, mu)  
+  beta1_prior.mu <- 1/2      # Beta1j ~ Gamma(r, mu)
+  alphaP_prior.r <- 1/2      # Alpha1j = Alpha2k ~ Gamma(r, mu) 
+  alphaP_prior.mu <- 1/2     # Alpha1j = Alpha2k ~ Gamma(r, mu) 
   
 } 
 
