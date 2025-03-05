@@ -51,40 +51,40 @@ prior_setting <- 1
 
 if (prior_setting == 1) {
   
-  pi_prior.a <- c(rep(1/3,6))  # mean of pi_j, pi_jk = a / a + b = (1/3) / (1/3+1/3) = 0.5, pi ~ beta(a,b)
-  pi_prior.b <- c(rep(1/3,6)) 
-  beta1_prior.r <- 2           # mean of beta1 = r/mu = 2/2 = 1, beta1 ~ gamma(r,mu)
-  beta1_prior.mu <- 2      
-  alphaP_prior.r <- 2         # mean of alphaP = r/mu = 2/2 = 1, alpha1 ~ gamma(r,mu)
+  pi_prior.a <- c(rep(1/3,6)) # pi_J, pi_jk ~ Beta(a,b)
+  pi_prior.b <- c(rep(1/3,6)) # pi_J, pi_jk ~ Beta(a,b)
+  beta1_prior.r <- 2          # Beta1j ~ Gamma(r, mu) 
+  beta1_prior.mu <- 2         # Beta1j ~ Gamma(r, mu)
+  alphaP_prior.r <- 2         
   alphaP_prior.mu <- 2
   
   
 } else if (prior_setting == 2) {
   
-  pi_prior.a <- c(rep(1/3,6))  # mean of pi_j, pi_jk = a / a + b = (1/3) / (1/3+1/3) = 0.5, pi ~ beta(a,b)
-  pi_prior.b <- c(rep(1/3,6)) 
-  beta1_prior.r <- 1           # mean of beta1 = r/mu = 1/1 = 1, beta1 ~ gamma(r,mu) gives a gamma prior with more variance (smaller values more variance)
-  beta1_prior.mu <- 1      
-  alphaP_prior.r <- 1         # mean of alphaP = r/mu = 1/1 = 1, alphaP ~ gamma(r,mu) gives a gamma prior with more variance 
+  pi_prior.a <- c(rep(1/3,6))  # pi_J, pi_jk ~ Beta(a,b)
+  pi_prior.b <- c(rep(1/3,6))  # pi_J, pi_jk ~ Beta(a,b)
+  beta1_prior.r <- 1           # Beta1j ~ Gamma(r, mu)
+  beta1_prior.mu <- 1          # Beta1j ~ Gamma(r, mu)
+  alphaP_prior.r <- 1          # Alpha1j = Alpha2k ~ Gamma(r, mu) 
   alphaP_prior.mu <- 1
   
 } else if (prior_setting == 3) {
   
-  pi_prior.a <- c(rep(1/3,6))  # mean of pi_j, pi_jk = a / a + b = (1/3) / (1/3+1/3) = 0.5, pi ~ beta(a,b)
-  pi_prior.b <- c(rep(1/3,6)) 
-  beta1_prior.r <- 1/2           # mean of beta1 = r/mu = 1/1 = 1, beta1 ~ gamma(r,mu) gives a gamma prior with more variance (smaller values more variance)
-  beta1_prior.mu <- 1/2     
-  alphaP_prior.r <- 1/2         # mean of alphaP = r/mu = 1/1 = 1, alphaP ~ gamma(r,mu) gives a gamma prior with more variance 
-  alphaP_prior.mu <- 1/2
+  pi_prior.a <- c(rep(1/3,6))  # pi_J, pi_jk ~ Beta(a,b)
+  pi_prior.b <- c(rep(1/3,6))  # pi_J, pi_jk ~ Beta(a,b)
+  beta1_prior.r <- 1/2         # Beta1j ~ Gamma(r, mu)    
+  beta1_prior.mu <- 1/2        # Beta1j ~ Gamma(r, mu)
+  alphaP_prior.r <- 1/2        # Alpha1j = Alpha2k ~ Gamma(r, mu) 
+  alphaP_prior.mu <- 1/2       # Alpha1j = Alpha2k ~ Gamma(r, mu) 
   
 } else if (prior_setting == 4) {
   
-  pi_prior.a <- c(rep(1,6))  # mean of pi_j, pi_jk = a / a + b = (1) / (1+1) = 0.5, pi ~ beta(a,b)
-  pi_prior.b <- c(rep(1,6)) 
-  beta1_prior.r <- 1/2           # mean of beta1 = r/mu = 1/1 = 1, beta1 ~ gamma(r,mu) gives a gamma prior with more variance (smaller values more variance)
-  beta1_prior.mu <- 1/2     
-  alphaP_prior.r <- 1/2         # mean of alphaP = r/mu = 1/1 = 1, alphaP ~ gamma(r,mu) gives a gamma prior with more variance 
-  alphaP_prior.mu <- 1/2
+  pi_prior.a <- c(rep(1,6))  # pi_J, pi_jk ~ Beta(a,b)
+  pi_prior.b <- c(rep(1,6))  # pi_J, pi_jk ~ Beta(a,b)
+  beta1_prior.r <- 1/2       # Beta1j ~ Gamma(r, mu)  
+  beta1_prior.mu <- 1/2      # Beta1j ~ Gamma(r, mu)
+  alphaP_prior.r <- 1/2      # Alpha1j = Alpha2k ~ Gamma(r, mu) 
+  alphaP_prior.mu <- 1/2     # Alpha1j = Alpha2k ~ Gamma(r, mu) 
   
 } 
 
@@ -254,12 +254,12 @@ for (s in scenario_vec) {
                         preference_stageI = bjsm_df$preference_stageI,
                         preference_stageII = bjsm_df$preference_stageII,
                         treatmentCD_stageII = bjsm_df$treatmentCD_stageII,
-                        pi_prior_a = pi_prior.a, # beta
-                        pi_prior_b = pi_prior.b, # beta 
-                        alphaP_prior_a = alphaP_prior.r, # gamma
-                        alphaP_prior_b = alphaP_prior.mu, # gamma
-                        beta1_prior_a = beta1_prior.r,   # gamma
-                        beta1_prior_b = beta1_prior.mu  # gamma
+                        pi_prior_a = pi_prior.a, 
+                        pi_prior_b = pi_prior.b, 
+                        alphaP_prior_a = alphaP_prior.r, 
+                        alphaP_prior_b = alphaP_prior.mu, 
+                        beta1_prior_a = beta1_prior.r,   
+                        beta1_prior_b = beta1_prior.mu  
       )
       
       jags.out <- jags(data=data_list, model.file=bjsm_model,parameters.to.save=saved_parms,n.chains=n_MCMC_chain,
@@ -271,10 +271,10 @@ for (s in scenario_vec) {
       
       
       # pi estimates posterior mean
-      pi_hat_bjsm <- rbind(pi_hat_bjsm, store$mean$pi) # 6 columns n.sim rows "PiA", "PiB", "PiC", "PiD"
+      pi_hat_bjsm <- rbind(pi_hat_bjsm, store$mean$pi) # 6 columns n.sim rows "PiA", "PiB", "PiAC", "PiAD", "PiBC", "PiBD"
       
       # pi estimates posterior variance
-      pi_hat_bjsm_var <- rbind(pi_hat_bjsm_var, store$sd$pi^2) # 6 columns n.sim rows "PiA", "PiB", "PiC", "PiD"
+      pi_hat_bjsm_var <- rbind(pi_hat_bjsm_var, store$sd$pi^2) # 6 columns n.sim rows "PiA", "PiB", "PiAC", "PiAD", "PiBC", "PiBD"
       
       # DTR estimates posterior mean
       DTR_hat_bjsm <- rbind(DTR_hat_bjsm, store$mean$DTR) # 16 columsn n.sim rows "AAC00", "AAD00", "BBC00", "BBD00", "AAC01", "AAD01", "BBC01", "BBD01", "AAC10", "AAD10", "BBC10", "BBD10", "AAC11", "AAD11", "BBC11", "BBD11"
@@ -289,10 +289,10 @@ for (s in scenario_vec) {
       beta_hat_bjsm_var <- rbind(beta_hat_bjsm_var, store$sd$beta^2) # 2 columsn n.sim rows "Beta1A", "Beta1B"
       
       # alpha estimates posterior mean
-      alpha_hat_bjsm <- rbind(alpha_hat_bjsm, store$mean$alphaP) # 4 columsn n.sim rows "AlphaP1" (1st stage preference), "AlphaP2 (2nd stage preference)
+      alpha_hat_bjsm <- rbind(alpha_hat_bjsm, store$mean$alphaP) # 4 columsn n.sim rows "Alpha1A", "Alpha1B", "Alpha2C", "Alpha2D"
       
       # alpha estimates posterior variances
-      alpha_hat_bjsm_var <- rbind(alpha_hat_bjsm_var, store$sd$alphaP^2) # 4 columsn n.sim rows "AlphaP1" (1st stage preference), "AlphaP2 (2nd stage preference)
+      alpha_hat_bjsm_var <- rbind(alpha_hat_bjsm_var, store$sd$alphaP^2) # 4 columsn n.sim rows "Alpha1A", "Alpha1B", "Alpha2C", "Alpha2D"
       
       # Coverage 
       quantile_mat <- mcmc.out$quantiles[c(1:6,8:29),c(1,5)] 
