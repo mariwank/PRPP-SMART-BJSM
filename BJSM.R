@@ -311,10 +311,10 @@ for (s in scenario_vec) {
     st<-format(Sys.time(), "%Y_%m_%d_%H_%M")
     
     # Define the folder path where you want your results saved
-    # folder_path <- "path to your folder where you want to store results"
+    folder_path <- "path to your folder where you want to store results"
     
     # Example: 
-    folder_path <- paste0("/Users/mariwank/Downloads/SimResults/Scenario", scenario, "/", subscenario, "/PriorSetting", prior_setting)
+    # folder_path <- paste0("/Users/mariwank/Downloads/SimResults/Scenario", scenario, "/", subscenario, "/PriorSetting", prior_setting)
     
     # Create the folder if it doesn't exist
     if (!file.exists(folder_path)) {
