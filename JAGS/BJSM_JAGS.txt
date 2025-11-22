@@ -34,8 +34,13 @@
     beta[1] ~ dgamma(beta1_prior_a,beta1_prior_b)     # beta1A
     beta[2] ~ dgamma(beta1_prior_a,beta1_prior_b)     # beta1B
     
+    # Hyperpriors for pi
+    a_pi ~ dgamma(1, 3)   
+    b_pi ~ dgamma(1, 3)
+    
+    
     for (j in 1:num_paths){
-      pi[j] ~ dbeta(pi_prior_a[j],pi_prior_b[j]) T(0.001,0.999) # no semicolon needed here but if you define the JAGS in R via a function it is needed due to differences between the BUGS and R languages
+      pi[j] ~ dbeta(a_pi, b_pi); T(0.001,0.999)
     }
     
     # DTR
