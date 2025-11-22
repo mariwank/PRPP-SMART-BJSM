@@ -1,7 +1,7 @@
 # install/load libraries 
 if(!("pacman" %in% installed.packages()[,"Package"])) install.packages("pacman")
 library(pacman)
-p_load(R2jags, coda, tidyverse, utils) 
+p_load(R2jags, coda, posterior, tidyverse, utils) 
 
 
 ### Data generation settings
