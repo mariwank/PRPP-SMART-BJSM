@@ -6,7 +6,7 @@
 # install/load libraries 
 if(!("pacman" %in% installed.packages()[,"Package"])) install.packages("pacman")
 library(pacman)
-p_load(R2jags, coda, tidyverse, utils) 
+p_load(R2jags, coda, posterior, tidyverse, utils) 
 
 
 ### Data generation settings
@@ -35,8 +35,6 @@ prior_setting <- 1
 
 if (prior_setting == 1) {
   
-  pi_prior.a <- c(rep(1/3,6)) # pi_J, pi_jk ~ Beta(a,b)
-  pi_prior.b <- c(rep(1/3,6)) # pi_J, pi_jk ~ Beta(a,b)
   beta1_prior.r <- 2          # Beta1j ~ Gamma(r, mu) 
   beta1_prior.mu <- 2         # Beta1j ~ Gamma(r, mu)
   alphaP_prior.r <- 2         # Alpha1j = Alpha2k ~ Gamma(r, mu)
@@ -45,8 +43,6 @@ if (prior_setting == 1) {
   
 } else if (prior_setting == 2) {
   
-  pi_prior.a <- c(rep(1/3,6))  # pi_J, pi_jk ~ Beta(a,b)
-  pi_prior.b <- c(rep(1/3,6))  # pi_J, pi_jk ~ Beta(a,b)
   beta1_prior.r <- 1           # Beta1j ~ Gamma(r, mu)
   beta1_prior.mu <- 1          # Beta1j ~ Gamma(r, mu)
   alphaP_prior.r <- 1          # Alpha1j = Alpha2k ~ Gamma(r, mu) 
@@ -54,21 +50,10 @@ if (prior_setting == 1) {
   
 } else if (prior_setting == 3) {
   
-  pi_prior.a <- c(rep(1/3,6))  # pi_J, pi_jk ~ Beta(a,b)
-  pi_prior.b <- c(rep(1/3,6))  # pi_J, pi_jk ~ Beta(a,b)
   beta1_prior.r <- 1/2         # Beta1j ~ Gamma(r, mu)    
   beta1_prior.mu <- 1/2        # Beta1j ~ Gamma(r, mu)
   alphaP_prior.r <- 1/2        # Alpha1j = Alpha2k ~ Gamma(r, mu) 
   alphaP_prior.mu <- 1/2       # Alpha1j = Alpha2k ~ Gamma(r, mu) 
-  
-} else if (prior_setting == 4) {
-  
-  pi_prior.a <- c(rep(1,6))  # pi_J, pi_jk ~ Beta(a,b)
-  pi_prior.b <- c(rep(1,6))  # pi_J, pi_jk ~ Beta(a,b)
-  beta1_prior.r <- 1/2       # Beta1j ~ Gamma(r, mu)  
-  beta1_prior.mu <- 1/2      # Beta1j ~ Gamma(r, mu)
-  alphaP_prior.r <- 1/2      # Alpha1j = Alpha2k ~ Gamma(r, mu) 
-  alphaP_prior.mu <- 1/2     # Alpha1j = Alpha2k ~ Gamma(r, mu) 
   
 } 
 
@@ -137,9 +122,9 @@ for (s in scenario_vec) {
     
     ##### Estimation #####
     NUM_PATHS <- 6 # number of treatment paths independent of preference in SMART (AA, BB, AC, AD, BC, BD) - max(treatment_stageII)
-    MCMC_SAMPLE <- 5500
+    MCMC_SAMPLE <- 2500
     BURN.IN <- 500
-    n_MCMC_chain <- 1
+    n_MCMC_chain <- 3
     n_MCMC_thin <- 1
     saved_parms = c('pi','beta', 'alphaP','DTR') # parameters to monitor 
 
@@ -180,9 +165,15 @@ for (s in scenario_vec) {
       beta[1] ~ dgamma(beta1_prior_a,beta1_prior_b)     # beta1A
       beta[2] ~ dgamma(beta1_prior_a,beta1_prior_b)     # beta1B
       
+      # Hyperpriors for pi
+      a_pi ~ dgamma(1, 3)  
+      b_pi ~ dgamma(1, 3)
+    
+    
       for (j in 1:num_paths){
-        pi[j] ~ dbeta(pi_prior_a[j],pi_prior_b[j]); T(0.001,0.999)
+        pi[j] ~ dbeta(a_pi, b_pi); T(0.001,0.999)
       }
+    
       
       # DTR
       DTR[1] = pi[1] * (pi[1]*beta[1]) + (1 - pi[1]) * pi[3] ## AAC00
@@ -218,7 +209,16 @@ for (s in scenario_vec) {
     alpha_hat_bjsm <- c()          # store posterior means
     alpha_hat_bjsm_var <- c()      # store posterior variances
     ci_hat <- c()
-    
+
+    mcmc_results <- data.frame(
+    sim = 1:n.sim,
+    max_Rhat = NA,
+    min_ESS = NA,
+    mean_ESS = NA,
+    converged_Rhat = NA,
+    converged_ESS200 = NA,
+    converged_ESS400 = NA)
+  
     for (i in 1:n.sim) {
       set.seed(i+100000)
       data <- generate_data(method=method, N=N, pNP1=pNP1, pTheta_A=pTheta_A, pNP2=pNP2, pTheta_C=pTheta_C, pi_A=pi_A, pi_B=pi_B, pi_A1=pi_A1, pi_B1=pi_B1, pi_AC=pi_AC, pi_AD=pi_AD, pi_BC=pi_BC, pi_BD=pi_BD, pA0A=pA0A, pB0B=pB0B, pA1A=pA1A, pB1B=pB1B, pA1C1=pA1C1, pA1C0=pA1C0, pA1D1=pA1D1, pA1D0=pA1D0, pA0C1=pA0C1, pA0D1=pA0D1, pB1C1=pB1C1, pB1C0=pB1C0, pB1D1=pB1D1, pB1D0=pB1D0, pB0C1=pB0C1, pB0D1=pB0D1)   
@@ -238,8 +238,6 @@ for (s in scenario_vec) {
                         preference_stageI = bjsm_df$preference_stageI,
                         preference_stageII = bjsm_df$preference_stageII,
                         treatmentCD_stageII = bjsm_df$treatmentCD_stageII,
-                        pi_prior_a = pi_prior.a, # beta
-                        pi_prior_b = pi_prior.b, # beta 
                         alphaP_prior_a = alphaP_prior.r, # gamma
                         alphaP_prior_b = alphaP_prior.mu, # gamma
                         beta1_prior_a = beta1_prior.r,   # gamma
@@ -285,6 +283,37 @@ for (s in scenario_vec) {
       quantile_mat <- quantile_mat[rowname_order,,drop=FALSE]
       param_in_ci <- data.table::between(true_piDTR_mat[,1], quantile_mat[, 1], quantile_mat[, 2])
       ci_hat <- rbind(ci_hat, param_in_ci) 
+
+      ## Modern R-hat
+      samples_array <- jags.out$BUGSoutput$sims.array
+      param_names <- dimnames(samples_array)[[3]]  # get all parameter names
+      rhat_vals <- numeric(length(param_names))
+      names(rhat_vals) <- param_names
+    
+      for (k in seq_along(param_names)) {
+        rhat_vals[k] <- rhat(as_draws_array(samples_array[,,k]))
+      }
+    
+      max_Rhat <- max(rhat_vals, na.rm = TRUE)
+    
+      ## ESS
+      ess_vals_bulk <- numeric(length(param_names))
+      names(ess_vals_bulk) <- param_names
+
+      for (l in seq_along(param_names)) {
+        ess_vals_bulk[l] <- posterior::ess_bulk(as_draws_array(samples_array[,,l]))
+      }
+    
+      min_ESS <- min(ess_vals_bulk, na.rm=T)
+      mean_ESS <- mean(ess_vals_bulk, na.rm=T)
+
+      ## Convergence flags (based on thresholds)
+      converged_Rhat <- (max_Rhat < 1.05)
+      converged_ESS200 <- (min_ESS  > 200)
+      converged_ESS400 <- (min_ESS  > 400)
+    
+      mcmc_results[i, c("max_Rhat", "min_ESS", "mean_ESS", "converged_Rhat", "converged_ESS200", "converged_ESS400")] <-
+        list(max_Rhat, min_ESS, mean_ESS, converged_Rhat, converged_ESS200, converged_ESS400)
       
     }
     
@@ -376,6 +405,15 @@ for (s in scenario_vec) {
     # Write the data to a CSV file
     write.csv(skip_df, file = file_path, row.names = FALSE)
     cat("CSV file saved to", file_path, "\n")
-    
 
+    ## MCMC diagnostics 
+    # Define the file name
+    file_name <- paste0("MCMC_diag_", st, ".csv")
+  
+    # Create the file path
+    file_path <- file.path(folder_path, file_name)
+  
+    # Write the data to a CSV file
+    write.csv(mcmc_results, file = file_path, row.names = FALSE)
+    cat("CSV file saved to", file_path, "\n")
 }
