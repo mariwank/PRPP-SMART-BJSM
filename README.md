@@ -4,7 +4,7 @@ Companion code for "Bayesian Estimation of Dynamic Treatment Regimens in a Parti
 ## Usage Note
 The code in this repository is in active development. To view or use stable code, see the appropriate releases:
 - [v1.0.0](../../releases/tag/v1.0.0): Release accompanying initial submission to _Statistics in Biopharmaceutical Research_.
-- [v2.0.0](../../releases/tag/v2.0.0): Release accompanying revision to _Statistics in Biopharmaceutical Research_.
+- [v2.0.0](../../releases/tag/V2.0.0): Release accompanying revision to _Statistics in Biopharmaceutical Research_.
 
 ## File Descriptions
 - [DataGeneration.R](DataGeneration.R): Main function used to generate data from a two-stage PRPP-SMART with binary end-of-stage outcome.
