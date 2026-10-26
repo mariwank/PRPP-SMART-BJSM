@@ -1,5 +1,5 @@
 # PRPP-SMART BJSM
-Companion code for "Bayesian Estimation of Dynamic Treatment Regimens in a Partially Randomized Patient Preference, Sequential, Multiple-Assignment, Randomized Trial".
+Companion code for ["Bayesian Estimation of Dynamic Treatment Regimens in a Partially Randomized Patient Preference, Sequential, Multiple-Assignment, Randomized Trial".](https://www.tandfonline.com/doi/full/10.1080/19466315.2026.2646548)
 
 ## Usage Note
 The code in this repository is in active development. To view or use stable code, see the appropriate releases:
